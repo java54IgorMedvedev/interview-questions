@@ -1,36 +1,35 @@
 package telran.interviews;
 
+import java.util.HashMap;
+
 public class MyArray<T> {
-    private final T[] array;
+    private final HashMap<Integer, T> map;
     private T defaultValue;
-    private int defaultVersion;
-    private int[] versions;
+    private final int size;
 
     public MyArray(int size) {
-        this.array = (T[]) new Object[size];
+        this.size = size;
+        this.map = new HashMap<>();
         this.defaultValue = null;
-        this.defaultVersion = 0;
-        this.versions = new int[size];
     }
 
     public void setAll(T value) {
         this.defaultValue = value;
-        this.defaultVersion++;
+        map.clear();
     }
 
     public void set(int index, T value) {
         checkIndex(index);
-        array[index] = value;
-        versions[index] = defaultVersion;
+        map.put(index, value);
     }
 
     public T get(int index) {
         checkIndex(index);
-        return versions[index] == defaultVersion ? array[index] : defaultValue;
+        return map.getOrDefault(index, defaultValue);
     }
 
     private void checkIndex(int index) {
-        if (index < 0 || index >= array.length) {
+        if (index < 0 || index >= size) {
             throw new ArrayIndexOutOfBoundsException(index);
         }
     }

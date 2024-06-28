@@ -8,7 +8,7 @@ public class ConnectionPool {
 
     public ConnectionPool(int size) {
         this.size = size;
-        this.pool = new LinkedHashMap<>(size, 0.75f, true) {
+        pool = new LinkedHashMap<Long, Connection>(size, 0.75f, true) {
             @Override
             protected boolean removeEldestEntry(Map.Entry<Long, Connection> eldest) {
                 return size() > ConnectionPool.this.size;
@@ -17,12 +17,12 @@ public class ConnectionPool {
     }
 
     public Connection getConnection(Connection connection) {
-        Connection result = pool.get(connection.id());
-        if (result == null) {
-            pool.put(connection.id(), connection);
-            result = connection;
+        pool.computeIfAbsent(connection.id(), id -> connection);
+        if (pool.size() > size) {
+            Long eldestKey = pool.keySet().iterator().next();
+            pool.remove(eldestKey);
         }
-        return result;
+        return connection;
     }
 
     public boolean isInPool(long id) {
