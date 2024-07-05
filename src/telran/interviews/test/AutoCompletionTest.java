@@ -9,10 +9,10 @@ import org.junit.jupiter.api.Test;
 import telran.interviews.AutoCompletion;
 
 class AutoCompletionTest {
-	String [] words = {"a", "b", "ABC", "avfdr", "aV", "aVV", "aaA"};
-	String [] wordsAb = {"ab", "ABC"};
-	String [] wordsAv = {"aV", "aVV", "avfdr"};
-	String [] wordsAa = {"aaA"};
+String [] words = {"ab", "ABC", "avfdr", "aV", "aVV", "aaA"};
+String [] wordsAb = {"ab", "ABC"};
+String [] wordsAv = {"aV", "avfdr", "aVV", };
+String [] wordsAa = {"aaA"};
 	@Test
 	void test() {
 		AutoCompletion autoCompletion = new AutoCompletion();
@@ -23,5 +23,5 @@ class AutoCompletionTest {
 		assertArrayEquals(wordsAv, autoCompletion.getVariants("av"));
 		assertArrayEquals(wordsAa, autoCompletion.getVariants("aa"));
 	}
-	
+
 }

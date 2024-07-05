@@ -1,23 +1,15 @@
 package telran.interviews;
-
 import java.util.*;
-
 public class AutoCompletion {
-    private TreeSet<String> words;
-
-    public AutoCompletion() {
-        this.words = new TreeSet<>();
-    }
-
-    public boolean addWord(String word) {
-        return words.add(word);
-    }
-
-    public String[] getVariants(String prefix) {
-        SortedSet<String> subset = words.subSet(prefix, prefix + Character.MAX_VALUE);
-        String[] variants = new String[subset.size()];
-        subset.toArray(variants);
-
-        return variants;
-    }
+ TreeSet<String> words = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+	public boolean addWord(String word) {
+		//adds new word into auto-completion variants
+		//returns true if added, false otherwise (if a given word already exists)
+		return words.add(word);
+	}
+	public String [] getVariants(String prefix) {
+		//returns all words beginning with a given prefix
+		//Complexity of finding the variants is O[logN]
+		return words.subSet(prefix, prefix + Character.MAX_VALUE).toArray(String[]::new);
+	}
 }
